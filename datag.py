@@ -18,7 +18,7 @@ WRITE = False
 # aumentar la complejidad de la arquitectura para obtener mas modificaciones
 TRANSFORM = A.Compose([
     A.HorizontalFlip(p=0.5),
-    A.RandomBrightnessContrast(brightness_limit=0.5, contrast_limit=0.5, p=1.0),
+    A.RandomBrightnessContrast(brightness_limit=0.4, contrast_limit=0.4, p=7.0),
     A.ShiftScaleRotate(shift_limit=0.09, scale_limit=0.09, rotate_limit=18)
 ])
 

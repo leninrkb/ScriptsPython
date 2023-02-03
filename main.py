@@ -2,9 +2,13 @@ import datag as dg
 
 # path_in = 'D:/datasets/cuasapas_data/chaleco/nuevo_data_38/re'
 # path_out = 'D:/datasets/cuasapas_data/chaleco/nuevo_data_38/aum'
-imgs = ['re_img_0.jpg']
 
-# imgs = datag.generar_imgs(imgs = imgs, path_in=path_in, path_out=path_out, write=True, generate=5, verbose=True)
+path_in = '/home/lenin/Documents/proyecto_mineros/dataset16/p_salida/'
+path_out = '/home/lenin/Documents/proyecto_mineros/dataset16/p_salida_aumentada/'
+imgs = dg.extraer_nombres_imgs(path_in)
+
+
+imgs = dg.generar_imgs(imgs = imgs, path_in=path_in, path_out=path_out, write=True, generate=41, verbose=True)
 # imgs = datag.generar_imgs(path_in=path_in, path_out=path_out, write=True, generate=5, verbose=True)
 
 # img_array = dg.cv2.imread(dg.os.path.join(path_in,imgs[0]))
@@ -15,6 +19,8 @@ imgs = ['re_img_0.jpg']
 
 # img_array = dg.redimensionar_img(img_array, 5, 5, dg.cv2.INTER_LINEAR)
 # print(f' shape nuevo: {img_array.shape}')
+
+
 '''
 # extraer sub_imagenes 
 path_in = '/home/lenin/Documents/proyecto_mineros/dataset16/fotos_fondo_itca/'
@@ -46,9 +52,10 @@ print(f'total: {c}')
 '''
 
 
+'''
 # rezise a todas las p
-path_in = '/home/lenin/Downloads/IMG_1234/'
-path_out = '/home/lenin/Documents/proyecto_mineros/dataset16/salida/'
+path_in = '/home/lenin/Documents/proyecto_mineros/dataset16/p_salida/'
+path_out = '/home/lenin/Documents/proyecto_mineros/dataset16/p_salida_aumentada/'
 imgs = dg.extraer_nombres_imgs(path_in)
 m=30
 c=0
@@ -58,4 +65,5 @@ for img in imgs:
     dg.guardar_img(new, path_out, c)
     c+=1
     print(c, end=', ')
+'''
 
