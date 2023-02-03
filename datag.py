@@ -18,8 +18,8 @@ WRITE = False
 # aumentar la complejidad de la arquitectura para obtener mas modificaciones
 TRANSFORM = A.Compose([
     A.HorizontalFlip(p=0.5),
-    A.RandomBrightnessContrast(brightness_limit=0.4, contrast_limit=0.4, p=7.0),
-    A.ShiftScaleRotate(shift_limit=0.09, scale_limit=0.09, rotate_limit=18)
+    A.RandomBrightnessContrast(brightness_limit=0.2, contrast_limit=0.2, p=8.0),
+    A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.1, rotate_limit=180)
 ])
 
 # escribe la img en el path indicado, puede pasarle un count / 0 x defecto
@@ -57,6 +57,7 @@ def generar_imgs(path_in, path_out,imgs=[],  generate=NUM_TO_GENERATE, write=WRI
                 img_count+=1
                 new_img = aumentar_imagen(img_array, path_out, img_count, write)
                 if not write: augmented_imgs.append(new_img)
+                
     if verbose:
         print('imgs generated =',img_count)
         print('augmented_imgs len =',len(augmented_imgs))
