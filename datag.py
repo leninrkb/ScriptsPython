@@ -1,7 +1,6 @@
 import albumentations as A
 import cv2
 import os
-import matplotlib.pyplot as plt
 import datetime
 
 global TRANSFORM 
@@ -74,3 +73,21 @@ def redimensionar_img(img_array, nuevo_ancho, nuevo_alto, interpolacion=INTERPOL
     puntos_bajar = (nuevo_ancho, nuevo_alto)
     new_img = cv2.resize(img_array, puntos_bajar, interpolation = interpolacion)
     return new_img
+
+
+def dividir_img(img_array, nuevo_ancho, nuevo_alto, n_filas, n_column):
+    img_base = img_array
+    sub_imgs = []
+    height, width, channels = new_img.shape
+    for ih in range(n_column ):
+        for iw in range(n_filas ):
+            x = width//n_filas * iw 
+            y = height//n_column * ih
+            h = (height // n_column)
+            w = (width // n_filas )
+            y_end = int(y+h)
+            x_end = int(x+w)
+            temporal = img_base[y:y_end, x:x_end]
+            sub_imgs.append(temporal)
+            img_base = img_array
+    return sub_imgs
