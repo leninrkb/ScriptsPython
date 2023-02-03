@@ -8,7 +8,9 @@ global NUM_TO_GENERATE
 global WRITE
 global VERBOSE
 global INTERPOLACION
+global RESIZE_TYPE
 
+RESIZE_TYPE = 'min'
 INTERPOLACION = cv2.INTER_NEAREST
 VERBOSE = True
 NUM_TO_GENERATE = 10
@@ -75,10 +77,30 @@ def redimensionar_img(img_array, nuevo_ancho, nuevo_alto, interpolacion=INTERPOL
     return new_img
 
 
-def dividir_img(img_array, nuevo_ancho, nuevo_alto, n_filas, n_column):
+def redimensionar_img_cuadrado(img_array, resize_type=RESIZE_TYPE):
+    w = img_array.shape[0]
+    h = img_array.shape[1]
+    newimg = []
+    if resize_type == 'min':
+        if w < h:
+            newimg = redimensionar_img(img_array, w, w)
+        else:
+            newimg =redimensionar_img(img_array, h, h)
+    elif resize_type == 'max':
+        if w > h:
+            newimg =redimensionar_img(img_array, w, w)
+        else:
+            newimg =redimensionar_img(img_array, h, h)   
+    else:
+        newimg = img_array  
+    return newimg
+
+# dada una img se extraen de ella tantas subimg como es especifique m x n 
+# retorna una vector con todas las subimg
+def dividir_img(img_array, n_filas, n_column):
     img_base = img_array
     sub_imgs = []
-    height, width, channels = new_img.shape
+    height, width, channels = img_array.shape
     for ih in range(n_column ):
         for iw in range(n_filas ):
             x = width//n_filas * iw 
@@ -91,3 +113,11 @@ def dividir_img(img_array, nuevo_ancho, nuevo_alto, n_filas, n_column):
             sub_imgs.append(temporal)
             img_base = img_array
     return sub_imgs
+
+# dada una ruta se extrae los nombres de todos los archivos como un vector
+def extraer_nombres_imgs(path_in):
+    nombres = [] 
+    for img_name in os.listdir(path_in):
+        nombres.append(img_name)
+    return nombres
+    
