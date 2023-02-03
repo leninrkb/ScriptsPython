@@ -23,10 +23,10 @@ TRANSFORM = A.Compose([
 ])
 
 # escribe la img en el path indicado, puede pasarle un count / 0 x defecto
-def guardar_img(new_img, path_out, img_count=0):
+def guardar_img(img_array, path_out, img_count=0):
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     datos_img = '{}/{}_{}.jpg'.format(path_out,img_count,timestamp)
-    cv2.imwrite(datos_img, new_img)
+    cv2.imwrite(datos_img, img_array)
     return
 
 # hace el aumento de una sola imagen
