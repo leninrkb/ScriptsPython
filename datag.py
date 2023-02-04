@@ -18,7 +18,7 @@ WRITE = False
 # aumentar la complejidad de la arquitectura para obtener mas modificaciones
 TRANSFORM = A.Compose([
     A.HorizontalFlip(p=0.5),
-    A.RandomBrightnessContrast(brightness_limit=0.2, contrast_limit=0.2, p=8.0),
+    A.RandomBrightnessContrast(brightness_limit=0.05, contrast_limit=0.05, p=0.5),
     A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.1, rotate_limit=180)
 ])
 
@@ -116,9 +116,10 @@ def dividir_img(img_array, n_filas, n_column):
     return sub_imgs
 
 # dada una ruta se extrae los nombres de todos los archivos como un vector
-def extraer_nombres_imgs(path_in):
+def extraer_nombres(path_in, negative=[]):
     nombres = [] 
     for img_name in os.listdir(path_in):
+        if img_name in negative: continue
         nombres.append(img_name)
     return nombres
     

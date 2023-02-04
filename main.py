@@ -3,12 +3,15 @@ import datag as dg
 # path_in = 'D:/datasets/cuasapas_data/chaleco/nuevo_data_38/re'
 # path_out = 'D:/datasets/cuasapas_data/chaleco/nuevo_data_38/aum'
 
-path_in = '/home/lenin/Documents/datasets/colores/verde'
+path_in = '/home/lenin/Documents/datasets/colores'
 # path_out = '/home/lenin/Documents/datasets/colores/aumento'
-imgs = dg.extraer_nombres_imgs(path_in)
-
-
-imgs = dg.generar_imgs(imgs = imgs, path_in=path_in, path_out=path_in, write=True, generate=20, verbose=True)
+negativos=['testimg','old']
+folders = dg.extraer_nombres(path_in, negativos)
+for name in folders: 
+    new_path_in = dg.os.path.join(path_in, name) 
+    print(f'trabajando en {new_path_in}')
+    imgs = dg.extraer_nombres(new_path_in)
+    imgs = dg.generar_imgs(imgs = imgs, path_in=new_path_in, path_out=new_path_in, write=True, generate=10, verbose=True)
 # imgs = datag.generar_imgs(path_in=path_in, path_out=path_out, write=True, generate=5, verbose=True)
 
 # img_array = dg.cv2.imread(dg.os.path.join(path_in,imgs[0]))
