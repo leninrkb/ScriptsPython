@@ -9,24 +9,38 @@ global WRITE
 global VERBOSE
 global INTERPOLACION
 global RESIZE_TYPE
+global MANTENER_ASPECTO
 
+MANTENER_ASPECTO = True
 RESIZE_TYPE = 'min'
 INTERPOLACION = cv2.INTER_NEAREST
 VERBOSE = True
 NUM_TO_GENERATE = 10
 WRITE = False
+
 # aumentar la complejidad de la arquitectura para obtener mas modificaciones
 TRANSFORM = A.Compose([
     A.HorizontalFlip(p=0.5),
-    A.RandomBrightnessContrast(brightness_limit=0.05, contrast_limit=0.05, p=0.5),
-    A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.1, rotate_limit=180)
+    A.RandomBrightnessContrast(brightness_limit=0.09, contrast_limit=0.09, p=0.5),
+    A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.1, rotate_limit=15)
 ])
 
-# escribe la img en el path indicado, puede pasarle un count / 0 x defecto
-def guardar_img(img_array, path_out, img_count=0):
-    timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-    datos_img = '{}/{}_{}.jpg'.format(path_out,img_count,timestamp)
-    cv2.imwrite(datos_img, img_array)
+def guardar_img(img_array, path_out, num=0):
+    '''
+    img_array = img leida por cv2\n
+    path_out = dir de salida\n
+    num = valor para numerar la img\n
+    guarda la imagen en el path indicado,
+    el nombre esta dado por el valor (en caso de pasarlo como parametro),
+    y la fecha actual del sistema junto con el tiempo\n
+    salida en formato jpg
+    '''
+    try:
+        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        datos_img = '{}/{}_{}.jpg'.format(path_out,num,timestamp)
+        cv2.imwrite(datos_img, img_array)
+    except Exception as e:
+        print(f'error en guardar_img: {e}')
     return
 
 # hace el aumento de una sola imagen
@@ -72,9 +86,19 @@ cv2.INTER_LINEAR: Interpolación lineal, una opción intermedia en términos de 
 cv2.INTER_CUBIC: Interpolación cúbica, es la más lenta pero también la más precisa.
 cv2.INTER_LANCZOS4: Interpolación de Lanczos, una opción intermedia en términos de velocidad y precisión.
 '''
-def redimensionar_img(img_array, nuevo_ancho, nuevo_alto, interpolacion=INTERPOLACION):
-    puntos_bajar = (nuevo_ancho, nuevo_alto)
-    new_img = cv2.resize(img_array, puntos_bajar, interpolation = interpolacion)
+def redimensionar_img(img_array, nuevo_ancho=-1, nuevo_alto=-1, interpolacion=INTERPOLACION, mantener_aspecto=MANTENER_ASPECTO, puntos_bajar=0):
+    try:
+        if mantener_aspecto:
+            size = img_array.shape
+            w = size[1]
+            h = size[0]
+            nuevo_alto = h - puntos_bajar
+            nuevo_ancho = w - puntos_bajar
+        if nuevo_ancho == -1 or nuevo_alto == -1: return
+        puntos_bajar = (nuevo_ancho, nuevo_alto)
+        new_img = cv2.resize(img_array, puntos_bajar, interpolation = interpolacion)
+    except Exception as e:
+        print(f'error en redimensionar_img: {e}')
     return new_img
 
 
