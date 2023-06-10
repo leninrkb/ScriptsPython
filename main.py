@@ -3,15 +3,15 @@ import datag as dg
 # path_in = 'D:/datasets/cuasapas_data/chaleco/nuevo_data_38/re'
 # path_out = 'D:/datasets/cuasapas_data/chaleco/nuevo_data_38/aum'
 
-path_in = '/home/lenin/Documents/proyecto_mineros/dataset16/fotos_mineros/Nueva carpeta/'
-path_out = '/home/lenin/Documents/proyecto_mineros/dataset16/fotos_mineros/resized/'
+path_in = '/home/lenin/Documents/proyecto_mineros/dataset16/fotos_mineros_casco/UNACEM/3/'
+path_out = '/home/lenin/Documents/proyecto_mineros/dataset16/fotos_mineros_casco/UNACEM/img'
 
 
-# hago un rezise a varias imagenes de un directorio
+# hago un resize a varias imagenes de un directorio
 nombres = dg.extraer_nombres(path_in=path_in)
 for nom in nombres:
     img_array = dg.cv2.imread(dg.os.path.join(path_in,nom))
-    img = dg.redimensionar_img(img_array, nuevo_ancho=400, nuevo_alto=300, interpolacion=dg.cv2.INTER_NEAREST, mantener_aspecto=False)
+    img = dg.redimensionar_img(img_array, nuevo_ancho=600, nuevo_alto=500, interpolacion=dg.cv2.INTER_NEAREST, mantener_aspecto=False)
     dg.guardar_img(img, path_out)
 
 # realizo data augmentation a todas las img de un directorio y las pongo en el mismo directorio
